@@ -57,13 +57,23 @@
                     if($equipment->etype==1){
                 ?>
                        
-                       <img id="e_device_<?php echo $equipment->eid; ?>" imgid="<?php echo $equipment->eid; ?>" class='equipment_device' src="<?php echo $equipment->eremote?base_url('image/lamp_on.png'):base_url('image/lamp_off.png'); ?>"/>
+                       <img id="e_device_<?php echo $equipment->eid; ?>" imgid="<?php echo $equipment->eid; ?>" class='equipment_device for-lamp' src="<?php echo $equipment->eremote?base_url('image/lamp_on.png'):base_url('image/lamp_off.png'); ?>"/>
 
-                <?php    }else{
+                <?php    }else if($equipment->etype==2){
                  ?>
                  <br/>
                       <img id="e_device_air<?php echo $equipment->eid; ?>" imgid="<?php echo $equipment->eid; ?>" class='equipment_device for-air' src="<?php echo $equipment->eremote?base_url('image/air_on.png'):base_url('image/air_off.png'); ?>"/>
                        <br/> <br/>
+
+                 <?php }else if($equipment->etype==3){
+                 ?>
+                 <br/>
+                      <img id="e_device_w_door<?php echo $equipment->eid; ?>" imgid="<?php echo $equipment->eid; ?>" class='e_device_w_door for-w-door' src="<?php echo $equipment->eremote?base_url('image/w_open_door.png'):base_url('image/w_close_door.png'); ?>"/>
+
+                 <?php }else if($equipment->etype==4){
+                 ?>
+                 <br/>
+                      <img id="e_device_r_door<?php echo $equipment->eid; ?>" imgid="<?php echo $equipment->eid; ?>" class='e_device_r_door for-r-door' src="<?php echo $equipment->eremote?base_url('image/r_open_door.png'):base_url('image/r_close_door.png'); ?>"/>
 
                  <?php } ?>
                   
@@ -158,21 +168,21 @@
             dataType:"json",
             success:function(data){
                if(data.status){
-                  if(estatus==1){
-                    $('#on_'+eid).removeClass('btn-active');
-                    $('#on_'+eid).addClass('btn-disable');
-                    $('#off_'+eid).removeClass('btn-disable');
-                    $('#off_'+eid).addClass('btn-active');
-                    $('#contac_'+eid).attr('src','<?php echo base_url('image/img_on.png'); ?>');
-                    $('#e_device_'+eid).attr('src','<?php echo base_url('image/lamp_on.png'); ?>'); 
-                  }else{
-                    $('#off_'+eid).removeClass('btn-active');
-                    $('#off_'+eid).addClass('btn-disable');
-                    $('#on_'+eid).removeClass('btn-disable');
-                    $('#on_'+eid).addClass('btn-active');
-                    $('#contac_'+eid).attr('src','<?php echo base_url('image/img_off.png'); ?>');
-                    $('#e_device_'+eid).attr('src','<?php echo base_url('image/lamp_off.png'); ?>'); 
-                  }
+                  // if(estatus==1){
+                  //   $('#on_'+eid).removeClass('btn-active');
+                  //   $('#on_'+eid).addClass('btn-disable');
+                  //   $('#off_'+eid).removeClass('btn-disable');
+                  //   $('#off_'+eid).addClass('btn-active');
+                  //   $('#contac_'+eid).attr('src','<?php echo base_url('image/img_on.png'); ?>');
+                  //   $('#e_device_'+eid).attr('src','<?php echo base_url('image/lamp_on.png'); ?>'); 
+                  // }else{
+                  //   $('#off_'+eid).removeClass('btn-active');
+                  //   $('#off_'+eid).addClass('btn-disable');
+                  //   $('#on_'+eid).removeClass('btn-disable');
+                  //   $('#on_'+eid).addClass('btn-active');
+                  //   $('#contac_'+eid).attr('src','<?php echo base_url('image/img_off.png'); ?>');
+                  //   $('#e_device_'+eid).attr('src','<?php echo base_url('image/lamp_off.png'); ?>'); 
+                  // }
                }else{
                   $.notify(data.message,'error');
                }
@@ -196,17 +206,36 @@
                 $('.btn-on').addClass('btn-active');
                 $('.switch_contac').attr('src','<?php echo base_url('image/img_off.png'); ?>');
                 $('.for-air').attr('src','<?php echo base_url('image/air_off.png'); ?>');
+                $('.for-lamp').attr('src','<?php echo base_url('image/lamp_off.png'); ?>');
+                $('.for-r-door').attr('src','<?php echo base_url('image/r_close_door.png'); ?>');
+                $('.for-w-door').attr('src','<?php echo base_url('image/w_close_door.png'); ?>');
               $.each(output, function( i, val ) {
                 $('#on_'+val).removeClass('btn-active');
                 $('#on_'+val).addClass('btn-disable');
                 $('#off_'+val).removeClass('btn-disable');
                 $('#off_'+val).addClass('btn-active');
                 $('#contac_'+val).attr('src','<?php echo base_url('image/img_on.png'); ?>');
-                $('#e_device_air'+val).attr('src','<?php echo base_url('image/air_on.png'); ?>'); 
+                //for air 
+                $('#e_device_air'+val).attr('src','<?php echo base_url('image/air_on.png'); ?>');
+                //for lamp
+                $('#e_device_'+val).attr('src','<?php echo base_url('image/lamp_on.png'); ?>'); 
+                //for white door 
+                $('#e_device_w_door'+val).attr('src','<?php echo base_url('image/w_open_door.png'); ?>');
+                $('#e_device_r_door'+val).attr('src','<?php echo base_url('image/r_open_door.png'); ?>');
               });
             }else{
+              $('.btn-off').removeClass('btn-active');
+              $('.btn-off').addClass('btn-disable');
+              $('.btn-on').removeClass('btn-disable');
+              $('.btn-on').addClass('btn-active');
               $('.switch_contac').attr('src','<?php echo base_url('image/img_off.png'); ?>');
+              //for air
               $('.for-air').attr('src','<?php echo base_url('image/air_off.png'); ?>');
+              //for lamp
+              $('.for-lamp').attr('src','<?php echo base_url('image/lamp_off.png'); ?>');
+              //for white door 
+              $('.for-r-door').attr('src','<?php echo base_url('image/r_close_door.png'); ?>');
+              $('.for-w-door').attr('src','<?php echo base_url('image/w_close_door.png'); ?>');
             }
           }
         });

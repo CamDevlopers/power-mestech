@@ -22,7 +22,7 @@ class Manages extends CI_Controller{
 		$status = $this->input->post('status');
 		$id = $this->input->post('id');
 		if($status==1){
-			$data['eremote'] = 1;
+			$data['eremote'] = 0;
 			$data['eremoter'] = 1;
 		}else{
 			$data['eremote'] = 0;
