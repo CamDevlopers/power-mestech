@@ -22,7 +22,7 @@ class Manages extends CI_Controller{
 		$status = $this->input->post('status');
 		$id = $this->input->post('id');
 		if($status==1){
-			$data['eremote'] = 0;
+			$data['eremote'] = 1;
 			$data['eremoter'] = 1;
 		}else{
 			$data['eremote'] = 0;
@@ -38,7 +38,13 @@ class Manages extends CI_Controller{
 	function update_air(){
 		$status = $this->input->post('status');
 		$id = $this->input->post('id');
-		$data['eremoter'] = 1;
+		if($status==1){
+			$data['eremote'] = 0;
+			$data['eremoter'] = 1;
+		}else{
+			$data['eremote'] = 0;
+			$data['eremoter'] = 0;
+		}
 		
 		if($this->Manage->update_lame($id,$data)){
 			echo json_encode(array('status' => true,'message'=>'Updated device #'.$id));

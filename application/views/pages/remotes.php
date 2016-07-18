@@ -29,13 +29,13 @@
     foreach ($floors->result() as $floor) {
   ?>
   <p class="clearfix"></p>
-  <h3 class="floor-name"><?php echo $floor->fname; ?></h3>
+  <!--<h3 class="floor-name"><?php echo $floor->fname; ?></h3>-->
       <?php  
         $rooms = $this->Manage->get_room_by_floor_id($floor->fid);
         foreach ($rooms->result() as $room) {
       ?>
       <p class="clearfix"></p>
-        <h4 class="room-name"><?php echo $room->rname; ?></h4>
+        <!-- <h4 class="room-name"><?php echo $room->rname; ?></h4>-->
          <div class="row">
         <?php 
           $equipments = $this->Manage->get_all_equipments_by_room_id($room->rid);
@@ -43,6 +43,9 @@
         ?>
          
             <div class="box">
+            <?php 
+                    if($equipment->etype<3){
+            ?>
               <div class="contac">
                   <a id="on_<?php echo $equipment->eid; ?>" stype="<?php echo $equipment->etype; ?>" sid="<?php echo $equipment->eid; ?>" href="#" class="btn-on switch <?php echo $equipment->eremote?'btn-disable':'btn-active'; ?>">​បើក</a>
                   <p class="clearfix"></p>
@@ -50,6 +53,9 @@
                    <p class="clearfix"></p>
                   <a id="off_<?php echo $equipment->eid; ?>" stype="<?php echo $equipment->etype; ?>" sid="<?php echo $equipment->eid; ?>" href="#" class="btn-off switch <?php echo $equipment->eremote?'btn-active':'btn-disable'; ?>">បិទ</a>
               </div>
+              <?php 
+                }
+              ?>
               <div class="equipment">
                 <b><?php echo $room->rname; ?></b>
                 <p style="color: #E65100;"><?php echo $equipment->eid; ?></p>
@@ -129,9 +135,21 @@
             dataType:"json",
             success:function(data){
                if(data.status){
-                  setTimeout(function(){
-                    off_air(eid);
-                  },1500);
+                  // if(estatus==1){
+                  //   $('#on_'+eid).removeClass('btn-active');
+                  //   $('#on_'+eid).addClass('btn-disable');
+                  //   $('#off_'+eid).removeClass('btn-disable');
+                  //   $('#off_'+eid).addClass('btn-active');
+                  //   $('#contac_'+eid).attr('src','<?php echo base_url('image/img_on.png'); ?>');
+                  //   $('#e_device_'+eid).attr('src','<?php echo base_url('image/lamp_on.png'); ?>'); 
+                  // }else{
+                  //   $('#off_'+eid).removeClass('btn-active');
+                  //   $('#off_'+eid).addClass('btn-disable');
+                  //   $('#on_'+eid).removeClass('btn-disable');
+                  //   $('#on_'+eid).addClass('btn-active');
+                  //   $('#contac_'+eid).attr('src','<?php echo base_url('image/img_off.png'); ?>');
+                  //   $('#e_device_'+eid).attr('src','<?php echo base_url('image/lamp_off.png'); ?>'); 
+                  // }
                }else{
                   $.notify(data.message,'error');
                }
@@ -168,21 +186,21 @@
             dataType:"json",
             success:function(data){
                if(data.status){
-                  // if(estatus==1){
-                  //   $('#on_'+eid).removeClass('btn-active');
-                  //   $('#on_'+eid).addClass('btn-disable');
-                  //   $('#off_'+eid).removeClass('btn-disable');
-                  //   $('#off_'+eid).addClass('btn-active');
-                  //   $('#contac_'+eid).attr('src','<?php echo base_url('image/img_on.png'); ?>');
-                  //   $('#e_device_'+eid).attr('src','<?php echo base_url('image/lamp_on.png'); ?>'); 
-                  // }else{
-                  //   $('#off_'+eid).removeClass('btn-active');
-                  //   $('#off_'+eid).addClass('btn-disable');
-                  //   $('#on_'+eid).removeClass('btn-disable');
-                  //   $('#on_'+eid).addClass('btn-active');
-                  //   $('#contac_'+eid).attr('src','<?php echo base_url('image/img_off.png'); ?>');
-                  //   $('#e_device_'+eid).attr('src','<?php echo base_url('image/lamp_off.png'); ?>'); 
-                  // }
+                  if(estatus==1){
+                    $('#on_'+eid).removeClass('btn-active');
+                    $('#on_'+eid).addClass('btn-disable');
+                    $('#off_'+eid).removeClass('btn-disable');
+                    $('#off_'+eid).addClass('btn-active');
+                    $('#contac_'+eid).attr('src','<?php echo base_url('image/img_on.png'); ?>');
+                    $('#e_device_'+eid).attr('src','<?php echo base_url('image/lamp_on.png'); ?>'); 
+                  }else{
+                    $('#off_'+eid).removeClass('btn-active');
+                    $('#off_'+eid).addClass('btn-disable');
+                    $('#on_'+eid).removeClass('btn-disable');
+                    $('#on_'+eid).addClass('btn-active');
+                    $('#contac_'+eid).attr('src','<?php echo base_url('image/img_off.png'); ?>');
+                    $('#e_device_'+eid).attr('src','<?php echo base_url('image/lamp_off.png'); ?>'); 
+                  }
                }else{
                   $.notify(data.message,'error');
                }
